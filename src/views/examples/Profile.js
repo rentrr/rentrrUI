@@ -50,7 +50,7 @@ class Profile extends React.Component {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={require("assets/img/theme/team-4-800x800.jpg")}
+                          src={this.props.currentUser.imageUrl}
                         />
                       </a>
                     </div>
@@ -99,7 +99,7 @@ class Profile extends React.Component {
                   </Row>
                   <div className="text-center">
                     <h3>
-                      Jessica Jones
+                      {this.props.currentUser ? this.props.currentUser.name : ""}
                       <span className="font-weight-light">, 27</span>
                     </h3>
                     <div className="h5 font-weight-300">

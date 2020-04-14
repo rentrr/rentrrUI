@@ -32,9 +32,31 @@ import {
   Row,
   Col
 } from "reactstrap";
+import Redirect from "react-router-dom/es/Redirect";
+import {FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, GOOGLE_AUTH_URL} from "../../constants/Const";
 
 class Register extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      gitHubRedirect: false,
+      facebookRedirect: false,
+    };
+  }
+
   render() {
+
+    if(this.props.authenticated) {
+      return <Redirect
+          to={{
+            pathname: "/",
+            state: { from: this.props.location }
+          }}/>;
+    }
+
+
+
     return (
       <>
         <Col lg="6" md="8">
@@ -47,8 +69,8 @@ class Register extends React.Component {
                 <Button
                   className="btn-neutral btn-icon mr-4"
                   color="default"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
+                  href={GITHUB_AUTH_URL}
+
                 >
                   <span className="btn-inner--icon">
                     <img
@@ -61,8 +83,8 @@ class Register extends React.Component {
                 <Button
                   className="btn-neutral btn-icon"
                   color="default"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
+                  href={GOOGLE_AUTH_URL}
+
                 >
                   <span className="btn-inner--icon">
                     <img
@@ -71,6 +93,19 @@ class Register extends React.Component {
                     />
                   </span>
                   <span className="btn-inner--text">Google</span>
+                </Button>
+                <Button
+                    className="btn-neutral btn-icon mr-4"
+                    color="default"
+                    href={FACEBOOK_AUTH_URL}
+                >
+                  <span className="btn-inner--icon">
+                    <img
+                        alt="..."
+                        src={require("assets/img/icons/common/facebook.png")}
+                    />
+                  </span>
+                  <span className="btn-inner--text">Facebook</span>
                 </Button>
               </div>
             </CardHeader>

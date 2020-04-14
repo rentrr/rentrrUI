@@ -20,6 +20,7 @@ import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import './customSideBar.css'
 
 // reactstrap components
 import {
@@ -124,19 +125,26 @@ class Sidebar extends React.Component {
             onClick={this.toggleCollapse}
           >
             <span className="navbar-toggler-icon" />
+            Toggle
           </button>
           {/* Brand */}
           {logo ? (
-            <NavbarBrand className="pt-0" {...navbarBrandProps}>
+            <NavbarBrand className="pt-1" {...navbarBrandProps}>
+              <span>
               <img
                 alt={logo.imgAlt}
-                className="navbar-brand-img"
                 src={logo.imgSrc}
+                width={75}
+                height={75}
               />
+              
+              </span>
+               <hr className="my-3" />      
             </NavbarBrand>
           ) : null}
           {/* User */}
-          <Nav className="align-items-center d-md-none">
+
+          <Nav className="align-items-center d-md-none marginTopNav">
             <UncontrolledDropdown nav>
               <DropdownToggle nav className="nav-link-icon">
                 <i className="ni ni-bell-55" />

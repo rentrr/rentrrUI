@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import Alert from 'react-s-alert';
 
 // reactstrap components
 import {
@@ -32,12 +33,44 @@ import {
   Row,
   Col
 } from "reactstrap";
+import {FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, GOOGLE_AUTH_URL} from "../../constants/Const";
+import Redirect from "react-router-dom/es/Redirect";
 
 class Login extends React.Component {
+
+  componentDidMount() {
+    // If the OAuth2 login encounters an error, the user is redirected to the /login page with an error.
+    // Here we display the error and then remove the error query parameter from the location.
+    if(this.props.location.state && this.props.location.state.error) {
+      setTimeout(() => {
+        Alert.error(this.props.location.state.error, {
+          timeout: 5000
+        });
+        this.props.history.replace({
+          pathname: this.props.location.pathname,
+          state: {}
+        });
+      }, 100);
+    }
+  }
+
+
+
+
+
+
   render() {
+    if(this.props.authenticated) {
+      return <Redirect
+          to={{
+            pathname: "/admin/index",
+            state: { from: this.props.location }
+          }}/>;
+    }
+
     return (
       <>
-        <Col lg="5" md="7">
+        <Col lg="6" md="8">
           <Card className="bg-secondary shadow border-0">
             <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-3">
@@ -47,8 +80,8 @@ class Login extends React.Component {
                 <Button
                   className="btn-neutral btn-icon"
                   color="default"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
+                  href={GITHUB_AUTH_URL}
+
                 >
                   <span className="btn-inner--icon">
                     <img
@@ -61,8 +94,8 @@ class Login extends React.Component {
                 <Button
                   className="btn-neutral btn-icon"
                   color="default"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
+                  href={GOOGLE_AUTH_URL}
+
                 >
                   <span className="btn-inner--icon">
                     <img
@@ -71,6 +104,20 @@ class Login extends React.Component {
                     />
                   </span>
                   <span className="btn-inner--text">Google</span>
+                </Button>
+
+                <Button
+                    className="btn-neutral btn-icon mr-4"
+                    color="default"
+                    href={FACEBOOK_AUTH_URL}
+                >
+                  <span className="btn-inner--icon">
+                    <img
+                        alt="..."
+                        src={require("assets/img/icons/common/facebook.png")}
+                    />
+                  </span>
+                  <span className="btn-inner--text">Facebook</span>
                 </Button>
               </div>
             </CardHeader>
